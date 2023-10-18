@@ -104,16 +104,6 @@
         function sendEmail() {
             const form = document.getElementById('contact-form');
             const formData = new FormData(form);
-            // Inside the email sending function in server.js
-            transporter.sendMail(mailOptions, (error, info) => {
-                if (error) {
-                    console.error('Error:', error);
-                    res.json({ success: false, error: error.message });
-                } else {
-                    console.log('Email sent:', info.response);
-                    res.json({ success: true });
-                }
-            });
             fetch('https://email-mail.onrender.com/send_email', {
                 method: 'POST',
                 body: formData,
