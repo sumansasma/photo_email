@@ -27,17 +27,17 @@ app.post('/send_email', upload.single('image'), (req, res) => {
 
     // Create a Nodemailer transporter
     const transporter = nodemailer.createTransport({
-        service: 'gmail.com', // e.g., 'Gmail'
+        service: 'YourEmailService', // e.g., 'Gmail'
         auth: {
-            user: 'sijgeriaucssangha@gmail.com', // Replace with your email
-            pass: 'cukc drra ypkd viay', // Replace with your email password
+            user: 'your-email@example.com', // Replace with your email
+            pass: 'your-password', // Replace with your email password
         },
     });
 
     // Compose the email
     const mailOptions = {
         from: 'your-email@example.com',
-        to: 'sijgeriaucssangha@gmail.com', // Replace with the recipient's email
+        to: 'recipient@example.com', // Replace with the recipient's email
         subject: 'Contact Form Submission',
         text: `Name: ${name}\nEmail: ${email}\nDescription: ${description}`,
         attachments: [
@@ -52,7 +52,7 @@ app.post('/send_email', upload.single('image'), (req, res) => {
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
             console.error('Error:', error);
-            res.json({ success: false });
+            res.json({ success: false, error: error.message }); // Return an error message
         } else {
             console.log('Email sent:', info.response);
             res.json({ success: true });
@@ -62,7 +62,6 @@ app.post('/send_email', upload.single('image'), (req, res) => {
         fs.unlinkSync(req.file.path);
     });
 });
-
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
