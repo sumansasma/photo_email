@@ -47,7 +47,16 @@ app.post('/send_email', upload.single('image'), (req, res) => {
             },
         ],
     };
-
+    // Inside the email sending function in server.js
+transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+        console.error('Error:', error);
+        res.json({ success: false, error: error.message });
+    } else {
+        console.log('Email sent:', info.response);
+        res.json({ success: true });
+    }
+});
     // Send the email
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
